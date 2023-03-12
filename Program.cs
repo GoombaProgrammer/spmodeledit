@@ -28,17 +28,34 @@ namespace sp_model_edit
                 Directory.Delete(dir);
             }
             Console.WriteLine("sp_model_edit: ");
-            string command = Console.ReadLine();
+            string command = "";
+            if (args[2] == "change")
+            {
+                command = "change";
+            }
+            else
+            {
+                command = Console.ReadLine() + "";
+            }
 
             if (command == "change")
             {
 
                 byte[] sentencePieceModel = System.IO.File.ReadAllBytes(tempDir + "\\sentencepiece.model");
-
-                Console.WriteLine("Find: ");
-                string find = Console.ReadLine();
-                Console.WriteLine("Change: ");
-                string change = Console.ReadLine();
+                string find;
+                string change;
+                if (args.Length > 3)
+                {
+                    find = args[3];
+                    change = args[4];
+                }
+                else
+                {
+                    Console.WriteLine("Find: ");
+                    find = Console.ReadLine() + "";
+                    Console.WriteLine("Change: ");
+                    change = Console.ReadLine() + "";
+                }
 
                 // Loop until find is found in model
                 for (int i = 0; i < sentencePieceModel.Length; i++)
@@ -101,6 +118,7 @@ namespace sp_model_edit
                 File.WriteAllText(tempDir + "\\model\\shared_vocabulary.txt", sharedVocabulary);
                 // Write output
                 File.WriteAllBytes(tempDir + "\\sentencepiece.model", sentencePieceModel);
+                File.Delete(outputModel);
                 ZipFile.CreateFromDirectory(tempDir, outputModel, CompressionLevel.Optimal, true);
                 Directory.Delete(tempDir, true);
             }
