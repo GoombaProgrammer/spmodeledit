@@ -1,3 +1,6 @@
+# OUTDATED
+If you want to use this, please use [this one](https://github.com/GoombaProgrammer/spme-gui)
+
 # spmodeledit
  An *.argosmodel editor
 
